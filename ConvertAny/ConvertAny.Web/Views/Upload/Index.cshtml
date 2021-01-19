@@ -1,0 +1,42 @@
+﻿<div class="col-lg-12">
+    <div class="input-group input-group-sm mb-3">
+        <div class="input-group-prepend">
+            <span id="fileSelect" class="input-group-text" style="cursor: pointer;">Select Files</span>
+        </div>
+        <input type="file" id="fileElem" 
+               multiple
+               accept="image/*"
+               style="display:none" onchange="handleFiles(this.files)">
+    </div>
+</div>
+<script>
+    const fileSelect = document.getElementById("fileSelect");
+    const fileElem = document.getElementById("fileElem");
+
+    fileSelect.addEventListener("click", function (e) {
+        if (fileElem) {
+            fileElem.click();
+        }
+        e.preventDefault(); // prevent navigation to "#"
+    }, false);
+
+    function handleFiles(files) {
+        //for (var i = 0; i < files.length; i++) {
+        //    var file = files[i];
+        //    var imageType = /image.*/;
+
+        //    if (!file.type.match(imageType)) {
+        //        continue;
+        //    }
+
+        //    var img = document.createElement("img");
+        //    img.classList.add("obj");
+        //    img.file = file;
+        //    preview.appendChild(img);
+
+        //    var reader = new FileReader();
+        //    reader.onload = (function (aImg) { return function (e) { aImg.src = e.target.result; }; })(img);
+        //    reader.readAsDataURL(file);
+        //}
+    }
+</script>

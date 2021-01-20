@@ -1,17 +1,42 @@
-﻿<div class="col-lg-12">
+﻿<style>
+    #fileSelectResult tbody tr td {
+        vertical-align: middle !important;
+    }
+
+        #fileSelectResult tbody tr td img {
+            width: 150px !important;
+        }
+</style>
+<div class="row">
     <div class="input-group input-group-sm mb-3">
         <div class="input-group-prepend">
             <span id="fileSelect" class="input-group-text" style="cursor: pointer;">Select Files</span>
         </div>
-        <input type="file" id="fileElem" 
+        <input type="file" id="fileElem"
                multiple
                accept="image/*"
-               style="display:none" onchange="handleFiles(this.files)">
+               style="display: none" onchange="handleFiles(this.files)">
+        <div class="input-group-prepend">
+            <span id="uploadFiles" class="input-group-text btn btn-info"
+                  style="cursor: pointer;">Upload Files</span>
+        </div>
     </div>
+    <table id="fileSelectResult" class="table table-hover table-sm">
+        <thead></thead>
+        <tbody>
+            <tr>
+                <td style="height: 120px; background-color: lightgray; color: navy; text-align: center;">
+                    <span>Please Select Files</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 <script>
+
     const fileSelect = document.getElementById("fileSelect");
     const fileElem = document.getElementById("fileElem");
+    const uploadFiles = document.getElementById("uploadFiles");
 
     fileSelect.addEventListener("click", function (e) {
         if (fileElem) {
@@ -20,23 +45,105 @@
         e.preventDefault(); // prevent navigation to "#"
     }, false);
 
+    uploadFiles.addEventListener("click", function (e) {
+        const fileSelectResult = document.getElementById("fileSelectResult");
+        const tableBody = fileSelectResult.querySelector("tbody");
+        const imgs = tableBody.getElementsByTagName("img");
+
+        for (let i = 0; i < imgs.length; i++) {
+            console.log(imgs[i], imgs[i].file);
+            FileUpload(imgs[i].file);
+        }
+
+
+        e.preventDefault(); // prevent navigation to "#"
+    }, false);
+
+    function FileUpload(file) {
+        const form = new FormData();
+        form.append("dateTime",new Date());
+        form.append("img", file);
+
+        fetch('/upload/post',
+            {
+                method: 'POST',
+                body: form
+            });
+    }
+
     function handleFiles(files) {
-        //for (var i = 0; i < files.length; i++) {
-        //    var file = files[i];
-        //    var imageType = /image.*/;
+        const getTh = function (v) {
+            const th = document.createElement("th");
+            th.innerHTML = v;
+            return th;
+        }
 
-        //    if (!file.type.match(imageType)) {
-        //        continue;
-        //    }
+        const getTd = function (v) {
+            const td = document.createElement("td");
+            td.innerHTML = v;
+            return td;
+        }
 
-        //    var img = document.createElement("img");
-        //    img.classList.add("obj");
-        //    img.file = file;
-        //    preview.appendChild(img);
+        if (!files.length) {
+            return;
+        }
 
-        //    var reader = new FileReader();
-        //    reader.onload = (function (aImg) { return function (e) { aImg.src = e.target.result; }; })(img);
-        //    reader.readAsDataURL(file);
-        //}
+        const fileSelectResult = document.getElementById("fileSelectResult");
+        const tableHead = fileSelectResult.querySelector("thead");
+        const tableBody = fileSelectResult.querySelector("tbody");
+        tableHead.innerHTML = "";
+        tableBody.innerHTML = "";
+
+        const headTr = document.createElement("tr");
+
+        headTr.appendChild(getTh("#"));
+        headTr.appendChild(getTh("Name"));
+        headTr.appendChild(getTh("Size"));
+        headTr.appendChild(getTh("Preview"));
+
+        const filesCount = files.length;
+
+        const fileLists = [];
+        for (let i = 0; i < filesCount; i++) {
+            const file = files[i];
+            const fileObj = {
+                idx: i,
+                name: file.name,
+                size: file.size,
+                type: file.type.split('/').pop(),
+                src: window.URL.createObjectURL(file),
+                file: file
+            }
+            fileLists.push(fileObj);
+        }
+
+        console.log(fileLists);
+
+        for (let i = 0; i < fileLists.length; i++) {
+            const file = fileLists[i];
+
+            //const input = document.createElement("input");
+            //input.setAttribute("type", "checkbox");
+            //console.log(input);
+
+            const tr = document.createElement("tr");
+
+            tr.appendChild(getTd(i + 1));
+            tr.appendChild(getTd(file.name));
+            tr.appendChild(getTd(file.size.numberFormat(0, '.', ',')));
+
+            const td = document.createElement("td");
+
+            const img = document.createElement("img");
+            img.src = file.src;
+            img.file = file.file;
+            img.onload = function () {
+                window.URL.revokeObjectURL(this.src);
+            }
+            td.appendChild(img);
+            tr.appendChild(td);
+
+            tableBody.appendChild(tr);
+        }
     }
 </script>

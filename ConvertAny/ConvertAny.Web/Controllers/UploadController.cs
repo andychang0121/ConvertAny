@@ -48,6 +48,9 @@ namespace ConvertAny.Web.Controllers
         {
             IFormFileCollection files = formdata.Files;
 
+            var portaits = (string[])formdata["isPortait"];
+
+
             foreach (IFormFile formFile in files)
             {
                 if (formFile.Length > 0)
@@ -60,19 +63,19 @@ namespace ConvertAny.Web.Controllers
 
                     }
 
-                    var name = Guid.NewGuid().ToString();
+                    //var name = Guid.NewGuid().ToString();
 
-                    var filePath = "C:\\temp\\" + name + ".jpg";
+                    //var filePath = "C:\\temp\\" + name + ".jpg";
 
-                    using (var stream = System.IO.File.Create(filePath))
-                    {
-                        await formFile.CopyToAsync(stream);
-                    }
+                    //using (var stream = System.IO.File.Create(filePath))
+                    //{
+                    //    await formFile.CopyToAsync(stream);
+                    //}
                 }
             }
 
 
-            return View();
+            return Json(new { data = "aaa" });
         }
     }
 }

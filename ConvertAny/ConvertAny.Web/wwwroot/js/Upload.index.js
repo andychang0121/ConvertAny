@@ -42,7 +42,6 @@ function FileUpload(form) {
     request.open("POST", API_ENDPOINT, true);
     request.onreadystatechange = () => {
         if (request.readyState === 4 && request.status === 200) {
-            console.log(JSON.parse(request.responseText), request);
             window.open("/api/upload/get", "_blank");
         }
     };

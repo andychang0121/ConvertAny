@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Primitives;
 
 namespace ConvertAny.Web.Controllers.Api
 {
@@ -20,6 +22,13 @@ namespace ConvertAny.Web.Controllers.Api
 
         [TempData]
         public string TempData { get; set; }
+
+
+        private static bool[] GetIsPortaits(StringValues stringValue)
+            => ((string) stringValue)
+                .GetStringArray()
+                .GetStingArrayToBoolean()
+                ?.ToArray();
 
         [HttpPost]
         [Route("Post")]
@@ -43,10 +52,7 @@ namespace ConvertAny.Web.Controllers.Api
                 }}
             };
 
-            bool[] isPortaits = ((string)form["isPortaits"])
-                .GetStringArray()
-                .GetStingArrayToBoolean()
-                ?.ToArray();
+            bool[] isPortaits = GetIsPortaits(form["isPortaits"]);
 
             IFormFileCollection files = form.Files;
 

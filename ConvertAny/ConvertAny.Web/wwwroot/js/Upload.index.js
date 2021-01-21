@@ -20,6 +20,7 @@ uploadFiles.addEventListener("click", function (e) {
     const isPortaitList = [];
 
     const form = new FormData();
+
     for (let image of imgs) {
         const isPortait = image.clientHeight > image.clientWidth;
         form.append("file", image.file);

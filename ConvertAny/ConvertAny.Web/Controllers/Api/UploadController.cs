@@ -28,18 +28,18 @@ namespace ConvertAny.Web.Controllers.Api
             Dictionary<string, ImageOutput> dict = new Dictionary<string, ImageOutput>
             {
                 {"PCHOME",new ImageOutput {
-                    MaxWidth = 800,
-                    Height = 120,
+                    Width = 800,
+                    MaxHeight = 120,
                     DPI = 100
                 }},
                 {"Momo",new ImageOutput {
-                    MaxWidth = 1000,
-                    Height = 300,
+                    Width = 1000,
+                    MaxHeight = 300,
                     DPI = 200
                 }},
                 {"Shopee",new ImageOutput {
-                    MaxWidth = 600,
-                    Height = 600
+                    Width = 600,
+                    MaxHeight = 600
                 }}
             };
 
@@ -50,7 +50,7 @@ namespace ConvertAny.Web.Controllers.Api
 
             IFormFileCollection files = form.Files;
 
-            Dictionary<string, byte[]> entryFiles = GetFileResult(files, isPortaits);
+            IEnumerable<ZipData> entryFiles = GetFileResult(files, isPortaits, dict);
 
             byte[] zipRs = ZipHelper.ZipData(entryFiles);
 
@@ -68,7 +68,23 @@ namespace ConvertAny.Web.Controllers.Api
             });
         }
 
-        private static ValueTuple<string, byte[]> GetFileResult(IFormFile formFile, bool isPortait)
+        [HttpGet]
+        [Route("Get")]
+        public IActionResult Get()
+        {
+            ResponseData rs = JsonConvert.DeserializeObject<ResponseData>(TempData);
+
+            byte[] bytes = rs.Result;
+
+            string fileName = $"{Guid.NewGuid()}.zip";
+
+            return File(bytes, _zipContentType, fileName);
+        }
+
+        private static double GetRatio(bool isPortait, int limitPx, int width, int height)
+        => isPortait ? limitPx / (double)height : 800 / (double)width;
+
+        private static ValueTuple<string, byte[]> GetFileResult(IFormFile formFile, bool isPortait, int limitPx)
         {
             string ext = formFile.FileName.Split(".").LastOrDefault();
 
@@ -78,7 +94,7 @@ namespace ConvertAny.Web.Controllers.Api
 
             using (Bitmap image = new Bitmap(Image.FromStream(fileStream)))
             {
-                double ratio = isPortait ? 800 / (double)image.Height : 800 / (double)image.Width;
+                double ratio = GetRatio(isPortait, limitPx, image.Width, image.Height);
 
                 ImageDirection direction = isPortait ? ImageDirection.Portait : ImageDirection.LandScape;
 
@@ -92,60 +108,38 @@ namespace ConvertAny.Web.Controllers.Api
             }
         }
 
-        private static Dictionary<string, byte[]> GetFileResult(IFormFileCollection files, IReadOnlyList<bool> isPortaits)
+        private static IEnumerable<ZipData> GetFileResult(IFormFileCollection files,
+            IReadOnlyList<bool> isPortaits, Dictionary<string, ImageOutput> ecProfile)
         {
-            Dictionary<string, byte[]> entryFiles = new Dictionary<string, byte[]>();
+            List<ZipData> entryFiles = new List<ZipData>();
 
-            for (int i = 0; i < files.Count; i++)
+            foreach (KeyValuePair<string, ImageOutput> ec in ecProfile)
             {
-                bool isPortait = isPortaits?[i] ?? false;
+                string ecName = ec.Key;
+                ImageOutput ecSetting = ec.Value;
 
-                IFormFile formFile = files[i];
+                for (int i = 0; i < files.Count; i++)
+                {
+                    bool isPortait = isPortaits?[i] ?? false;
 
-                (string item1, byte[] bytes) = GetFileResult(formFile, isPortait);
+                    IFormFile formFile = files[i];
 
-                entryFiles.Add(item1, bytes);
+                    (string fileName, byte[] bytes) = GetFileResult(formFile, isPortait, ecSetting.Width);
 
-                //if (formFile.Length > 0)
-                //{
-                //    string ext = formFile.FileName.Split(".").LastOrDefault();
+                    fileName = $"{ecName}-{fileName}";
 
-                //    string originalFileName = formFile.FileName.Split(".").FirstOrDefault();
+                    ZipData zipData = new ZipData
+                    {
+                        FileName = fileName,
+                        Bytes = bytes,
+                        FolderName = string.Empty
+                    };
 
-                //    Stream fileStream = formFile.OpenReadStream();
-
-                //    using (Bitmap image = new Bitmap(Image.FromStream(fileStream)))
-                //    {
-                //        double ratio = isPortait ? 800 / (double)image.Height : 800 / (double)image.Width;
-
-                //        ImageDirection direction = isPortait ? ImageDirection.Portait : ImageDirection.LandScape;
-
-                //        Bitmap newImage = image.Resize(ratio, direction);
-
-                //        string fileName = GetFileName(originalFileName, newImage.Width, newImage.Height, ext);
-
-                //        byte[] bytes = newImage.ImageToByteArray(image.RawFormat);
-
-                //        entryFiles.Add(fileName, bytes);
-                //    }
-                //}
+                    entryFiles.Add(zipData);
+                }
             }
 
             return entryFiles;
-        }
-
-
-        [HttpGet]
-        [Route("Get")]
-        public IActionResult Get()
-        {
-            ResponseData rs = JsonConvert.DeserializeObject<ResponseData>(TempData);
-
-            byte[] bytes = rs.Result;
-
-            string fileName = $"{Guid.NewGuid()}.zip";
-
-            return File(bytes, _zipContentType, fileName);
         }
 
         private static string GetFileName(string prefix, int w, int h, string extName)

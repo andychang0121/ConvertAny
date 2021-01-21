@@ -30,18 +30,18 @@ namespace ConvertAny.Web.Controllers
             Dictionary<string, ImageOutput> dict = new Dictionary<string, ImageOutput>
             {
                 {"PCHOME",new ImageOutput {
-                    MaxWidth = 800,
-                    Height = 120,
+                    Width = 800,
+                    MaxHeight = 120,
                     DPI = 100
                 }},
                 {"Momo",new ImageOutput {
-                    MaxWidth = 1000,
-                    Height = 300,
+                    Width = 1000,
+                    MaxHeight = 300,
                     DPI = 200
                 }},
                 {"Shopee",new ImageOutput {
-                    MaxWidth = 600,
-                    Height = 600
+                    Width = 600,
+                    MaxHeight = 600
                 }}
             };
 

@@ -5,21 +5,32 @@ using System.Linq;
 
 namespace ConvertAny.Web.Helper
 {
+    public class ZipData
+    {
+        public string FileName { get; set; }
+
+        public byte[] Bytes { get; set; }
+
+        public string FolderName { get; set; }
+    }
+
     public class ZipHelper
     {
-        public static byte[] ZipData(Dictionary<string, byte[]> data)
+        public static byte[] ZipData(IEnumerable<ZipData> data)
         {
             using (MemoryStream zipStream = new MemoryStream())
             {
                 using (ZipArchive zipArchive = new ZipArchive(zipStream, ZipArchiveMode.Update))
                 {
-                    foreach (string fileName in data.Keys)
+                    foreach (ZipData zip in data)
                     {
-                        ZipArchiveEntry entry = zipArchive.CreateEntry(fileName);
+                        string zipFileName = $"{zip.FileName}";
+
+                        ZipArchiveEntry entry = zipArchive.CreateEntry(zipFileName);
 
                         using (Stream entryStream = entry.Open())
                         {
-                            byte[] buff = data[fileName];
+                            byte[] buff = zip.Bytes;
                             entryStream.Write(buff, 0, buff.Length);
                         }
                     }

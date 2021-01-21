@@ -2,11 +2,15 @@
 {
     public class ImageOutput
     {
-        public int Height { get; set; }
+        public string EcName { get; set; }
 
-        public int MaxWidth { get; set; }
+        public string Category { get; set; }
 
-        public int MinWidth { get; set; }
+        public int Width { get; set; }
+
+        public int MaxHeight { get; set; }
+
+        public int MinHeight { get; set; }
 
         public int Resolution { get; set; }
 

@@ -17,34 +17,32 @@ uploadFiles.addEventListener("click", function (e) {
     const tableBody = fileSelectResult.querySelector("tbody");
     const imgs = tableBody.getElementsByTagName("img");
 
-    //const isPortaitList = [];
-    for (let i = 0; i < imgs.length; i++) {
-        const file = imgs[i].file;
-        const isPortait = imgs[i].clientHeight > imgs[i].clientWidth;
-        //isPortaitList.push(isPortait);
-        const form = new FormData();
-        form.append("file", file);
-        form.append("isPortait", isPortait);
-        FileUpload(form);
+    const isPortaitList = [];
+
+    const form = new FormData();
+    for (let image of imgs) {
+        const isPortait = image.clientHeight > image.clientWidth;
+        form.append("file", image.file);
+        isPortaitList.push(isPortait);
     }
 
-    //form.append("isPortait", isPortaitList);
+    form.append("isPortaits", isPortaitList);
 
-    //FileUpload(form);
+    FileUpload(form);
 
 }, false);
+
+
+
 
 function FileUpload(form) {
     const API_ENDPOINT = "api/upload/post";
     const request = new XMLHttpRequest();
-    request.open("POST", API_ENDPOINT, false);
+    request.open("POST", API_ENDPOINT, true);
     request.onreadystatechange = () => {
         if (request.readyState === 4 && request.status === 200) {
             console.log(JSON.parse(request.responseText), request);
             window.open("/api/upload/get", "_blank");
-            //const oReq = new XMLHttpRequest();
-            //oReq.open("GET", "/api/upload/get");
-            //oReq.send();
         }
     };
     request.send(form);

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using ConvertAny.Service;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 

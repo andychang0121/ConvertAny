@@ -5,7 +5,7 @@ using ConvertAny.Service.Interface;
 
 namespace ConvertAny.Service.Repository
 {
-    class ZipService : IZipService
+    public class ZipService : IZipService
     {
     }
 }

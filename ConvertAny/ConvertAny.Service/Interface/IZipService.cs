@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ConvertAny.Service.Interface
+﻿namespace ConvertAny.Service.Interface
 {
-    interface IZipService
+    public interface IZipService
     {
     }
 }

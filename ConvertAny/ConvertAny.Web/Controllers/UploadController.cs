@@ -6,15 +6,12 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using ConvertAny.Service;
 using ConvertAny.Web.Models.Image;
 
 namespace ConvertAny.Web.Controllers
 {
-    public enum ImageDirection
-    {
-        Portait = 0,
-        LandScape = 1
-    }
+    
 
     //https://www.codeproject.com/Articles/2941/Resizing-a-Photographic-image-with-GDI-for-NET
     public class UploadController : Controller

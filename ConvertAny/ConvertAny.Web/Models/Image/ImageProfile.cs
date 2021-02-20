@@ -1,4 +1,4 @@
-﻿using ConvertAny.Web.Controllers;
+﻿using ConvertAny.Service;
 using System.Drawing.Imaging;
 
 namespace ConvertAny.Web.Models.Image

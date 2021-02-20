@@ -45,6 +45,8 @@ namespace ConvertAny.Web
             services.AddSession();
 
             services.AddScoped<IConvertProcess, ConvertProcess>();
+            services.AddScoped<IImageService, ImageService>();
+            services.AddScoped<IZipService, ZipService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

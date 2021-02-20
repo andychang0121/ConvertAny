@@ -1,25 +1,44 @@
 ﻿<div class="row">
+    @Html.AntiForgeryToken()
     <div class="input-group input-group-sm mb-3">
-        <div class="input-group-prepend">
-            <span id="fileSelect" class="input-group-text" style="cursor: pointer;">Select Files</span>
+        <div class="input-group-prepend mb-3">
+            <span id="fileSelect" class="input-group-text" style="cursor: pointer;">選擇圖片</span>
+            <span id="uploadFiles" class="input-group-text btn btn-info" style="cursor: pointer;">圖片上傳</span>
+            <span class="input-group-text btn btn-info" onclick="pageReload()">重新選擇</span>
+            <div class="input-group-prepend">
+                <span class="input-group-text">寬度</span>
+            </div>
+            <input id="customWidth" type="text" class="form-control" placeholder="自定義寬度">
+            <div class="input-group-prepend">
+                <span class="input-group-text">高度</span>
+            </div>
+            <input id="customHeight" type="text" class="form-control" placeholder="自定義高度度">
         </div>
+
         <input type="file" id="fileElem"
                multiple
                accept="image/*"
-               style="display: none" onchange="handleFiles(this.files)">
-        <div class="input-group-prepend">
-            <span id="uploadFiles" class="input-group-text btn btn-info"
-                  style="cursor: pointer;">Upload Files</span>
+               style="display: none" onchange="setFilesToTable(this.files)">
+    </div>
+    <div class="progress">
+        <div id="progress"
+             class="progress-bar"
+             role="progressbar"
+             aria-valuenow="0"
+             aria-valuemin="0"
+             aria-valuemax="100"
+             style="width: 0;">
+            <span class="glyphicon glyphicon-plus-sign" style="color: purple;"></span>
         </div>
     </div>
     <table id="fileSelectResult" class="table table-hover table-sm">
         <thead></thead>
         <tbody>
-            <tr>
-                <td style="height: 120px; background-color: lightgray; color: navy; text-align: center;">
-                    <span>Please Select Files</span>
-                </td>
-            </tr>
+        <tr>
+            <td style="height: 120px; background-color: lightgray; color: navy; text-align: center;">
+                <span>Please Select Files</span>
+            </td>
+        </tr>
         </tbody>
     </table>
 </div>

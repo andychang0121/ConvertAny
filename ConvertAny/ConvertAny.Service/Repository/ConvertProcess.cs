@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ConvertAny.Service.Interface;
+﻿using ConvertAny.Service.Process;
 
 namespace ConvertAny.Service.Repository
 {
-    class ConvertProcess : IConvertProcess
+    public class ConvertProcess : IConvertProcess
     {
     }
 }

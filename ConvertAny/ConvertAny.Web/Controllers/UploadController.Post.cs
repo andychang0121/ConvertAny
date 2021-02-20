@@ -1,5 +1,10 @@
-﻿using ConvertAny.Web.Helper;
-using ConvertAny.Web.Models.Image;
+﻿using ConvertAny.Common.Enum;
+using ConvertAny.Common.Helper;
+using ConvertAny.Common.Models.Image;
+using ConvertAny.Service.Models;
+using ConvertAny.Web.Helper;
+using ConvertAny.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -7,10 +12,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using ConvertAny.Common.Enum;
-using ConvertAny.Service.Process;
-using ConvertAny.Web.Models;
-using Microsoft.AspNetCore.Authorization;
+using System.Threading.Tasks;
 
 namespace ConvertAny.Web.Controllers
 {
@@ -85,6 +87,65 @@ namespace ConvertAny.Web.Controllers
             }
 
             return Ok(new { string.Empty });
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> PostDataAsync(RequestData requestData)
+        {
+            if (!requestData.ValidRequestData()) return Json(new ResponseResult
+            {
+                IsOk = false
+            });
+
+            ResponseData response = await ConvertImageAsync(requestData);
+
+            IActionResult rs = await Task.Run(() => SetTempData(response));
+
+            return rs;
+        }
+
+        public async Task<ResponseData> ConvertImageAsync(RequestData requestData)
+        {
+            Dictionary<string, ImageOutput> dict = _ecDict;
+
+            if (requestData.IsCustomSize && requestData.CustomWidth.HasValue && requestData.CustomHeight.HasValue)
+            {
+                dict = new Dictionary<string, ImageOutput>
+                {
+                    {"自定義尺寸",new ImageOutput {
+                        Width = requestData.CustomWidth.Value,
+                        MaxHeight = requestData.CustomHeight.Value,
+                        DPI = 72
+                    }},
+                };
+            }
+
+            Stream stream = requestData.Base64.GetStream();
+
+            bool isPortait = requestData.Height > requestData.Width;
+
+            ProcessData processData =
+                new ProcessData(requestData.FileName, requestData.Size, requestData.Type, isPortait, requestData.Width, requestData.Height, dict);
+
+            ResponseData rs = await SizingAsync(stream, processData);
+
+            return rs;
+        }
+
+        private async Task<ResponseData> SizingAsync(Stream stream, ProcessData processData)
+        {
+            byte[] zipRs = await _convertProcess.ConvertProcessAsync(stream, processData);
+
+            ResponseData response = new ResponseData
+            {
+                FileName = processData.FileName,
+                ContentType = processData.Type,
+                Result = zipRs
+            };
+
+            return response;
         }
     }
 }

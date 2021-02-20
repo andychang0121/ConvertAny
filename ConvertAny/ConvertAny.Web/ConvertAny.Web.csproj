@@ -8,6 +8,8 @@
   <ItemGroup>
     <Compile Remove="Helper\StringHelper.cs" />
     <Compile Remove="Helper\ZipHelper.cs" />
+    <Compile Remove="Models\Image\ImageOutput.cs" />
+    <Compile Remove="Models\Image\ImageProfile.cs" />
   </ItemGroup>
 
   <ItemGroup>

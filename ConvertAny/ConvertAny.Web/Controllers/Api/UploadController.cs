@@ -3,15 +3,14 @@ using ConvertAny.Web.Models;
 using ConvertAny.Web.Models.Image;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using ConvertAny.Service;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Primitives;
+using ConvertAny.Common.Enum;
 
 namespace ConvertAny.Web.Controllers.Api
 {

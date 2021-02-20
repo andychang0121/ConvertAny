@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ConvertAny.Service
+namespace ConvertAny.Common.Enum
 {
     public enum ImageDirection
     {

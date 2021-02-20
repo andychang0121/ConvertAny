@@ -1,4 +1,5 @@
 ﻿using ConvertAny.Web.Helper;
+using ConvertAny.Web.Models.Image;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -6,12 +7,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using ConvertAny.Service;
-using ConvertAny.Web.Models.Image;
+using ConvertAny.Common.Enum;
 
 namespace ConvertAny.Web.Controllers
 {
-    
+
 
     //https://www.codeproject.com/Articles/2941/Resizing-a-Photographic-image-with-GDI-for-NET
     public class UploadController : Controller

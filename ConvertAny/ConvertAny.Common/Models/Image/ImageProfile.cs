@@ -1,7 +1,7 @@
 ﻿using ConvertAny.Common.Enum;
 using System.Drawing.Imaging;
 
-namespace ConvertAny.Web.Models.Image
+namespace ConvertAny.Common.Models.Image
 {
     public struct ImageProfile
     {

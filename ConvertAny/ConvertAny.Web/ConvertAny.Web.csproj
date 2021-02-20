@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ConvertAny.Common\ConvertAny.Common.csproj" />
     <ProjectReference Include="..\ConvertAny.Service\ConvertAny.Service.csproj" />
   </ItemGroup>
 

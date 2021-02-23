@@ -11,6 +11,7 @@ const [fileSelect, fileElem, uploadFiles, customWidth, customHeight] = [
     , document.getElementById("customHeight")];
 
 let _width = 0;
+let _imageCount = 0;
 
 fileElem.addEventListener("change", function () {
     _bsProgress.classList.value = "progress-bar progress-bar-striped progress-bar-animated";
@@ -30,8 +31,6 @@ uploadFiles.addEventListener("click", function (e) {
     const tableBody = fileSelectResult.querySelector("tbody");
     const imgs = tableBody.getElementsByTagName("img");
 
-    //multiUploadFiles(imgs); -- ok
-    //singleUploadFiles(imgs); -- ok
     setProgress(true);
     setLoaderPromise(true, _loader).then(function () {
         uploadFilesBase64Async(imgs, customWidth.value, customHeight.value);
@@ -39,10 +38,21 @@ uploadFiles.addEventListener("click", function (e) {
 
 }, false);
 
-function uploadFilesBase64Async(imgs, customWidth, customHeight) {
+function getUploadFiles(imgs) {
+    const rs = [];
+    [].forEach.call(imgs, function (img) {
+        const _isUpload = validFileSize(img.file.size);
+        if (_isUpload) {
+            rs.push(img);
+        }
+    });
+    return rs;
+}
 
+function uploadFilesBase64Async(imgs, customWidth, customHeight) {
     const ajaxPost = function (image, _requestData, _url) {
         const _file = image.file;
+
         getBase64(_file).then(function (r) {
             _requestData.base64 = r;
         }).then(function () {
@@ -56,14 +66,21 @@ function uploadFilesBase64Async(imgs, customWidth, customHeight) {
             jUploadFile(_url, _requestData);
         });
     };
+    const _imgs = getUploadFiles(imgs);
 
-    for (let image of imgs) {
+    _imageCount = _imgs.length;
+
+    for (let image of _imgs) {
         const _requestData = {
             customWidth: customWidth,
             customHeight: customHeight
         };
 
-        ajaxPost(image, _requestData, API_ENDPOINT);
+        if (image.hasUpload) {
+            ajaxPost(image, _requestData, API_ENDPOINT);
+        } else {
+            image.classList.add("clip-svg");
+        };
     }
 }
 
@@ -79,7 +96,12 @@ function jUploadFile(url, data) {
         data: JSON.stringify(data),
         contentType: "application/json",
         async: false,
+        beforeSend: function () {
+            _imageCount--;
+            console.log("beforeSend:", _imageCount);
+        },
         complete: function () {
+            console.log("complete:", _imageCount);
             setLoader(false, _loader);
         },
         success: function (r) {
@@ -88,6 +110,8 @@ function jUploadFile(url, data) {
                 window.open(_url, "_blank");
             }
         }
+    }).done(function () {
+        console.log("done:", _imageCount);
     });
 }
 
@@ -109,6 +133,7 @@ function setLoader(b, o) {
 
 function setProgress(b, o) {
     const _o = o === undefined ? document.getElementById("progress") : o;
+
     if (b) {
         _o.style.width = "";
         _o.classList.value = "progress-bar progress-bar-striped progress-bar-animated";
@@ -164,36 +189,6 @@ function uploadFile(method, url, requestData) {
     }
 }
 
-function singleUploadFiles(imgs) {
-    for (let image of imgs) {
-        const isPortaitList = [];
-        const form = new FormData();
-        const isPortait = image.clientHeight > image.clientWidth;
-        form.append("files", image.file);
-        isPortaitList.push(isPortait);
-        form.append("isPortaits", isPortaitList);
-        FileUpload(form);
-    }
-}
-
-function multiUploadFiles(imgs) {
-    const isPortaitList = [];
-
-    const form = new FormData();
-    form.append("customWidth", customWidth.value);
-    form.append("customHeight", customHeight.value);
-
-    for (let image of imgs) {
-        const isPortait = image.clientHeight > image.clientWidth;
-        form.append("files", image.file);
-        isPortaitList.push(isPortait);
-    }
-
-    form.append("isPortaits", isPortaitList);
-
-    FileUpload(form);
-}
-
 function pageReload() {
     location.reload();
 }
@@ -218,35 +213,6 @@ function completeHandler() { }
 function errorHandler() { }
 
 function abortHandler() { }
-
-function FileUpload(form) {
-    const request = new XMLHttpRequest();
-    request.upload.addEventListener("progress", updateProgress, false);
-    request.addEventListener("load", completeHandler, false);
-    request.addEventListener("error", errorHandler, false);
-    request.addEventListener("abort", abortHandler, false);
-    request.open("POST", API_ENDPOINT, false);
-    request.setRequestHeader("Cache-Control", "no-cache");
-    request.setRequestHeader("Accept", "multipart/form-data");
-    request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-
-    request.onreadystatechange = function (e) {
-        if (request.readyState === 4 && request.status === 200) {
-            _bsProgress.classList.value = "progress-bar progress-bar-info";
-            const _response = JSON.parse(request.response);
-
-            setLoader(false);
-
-            if (_response.IsOk) {
-                const _url = `/upload/get?tempdataKey=${_response.Data}`;
-                window.open(_url);
-            }
-        }
-    };
-    _bsProgress.style.width = "";
-    _bsProgress.classList.value = "progress-bar progress-bar-striped active progress-bar-success";
-    request.send(form);
-}
 
 function getElement(config) {
     const ele = document.createElement(config.type);
@@ -280,8 +246,10 @@ function setHTMLTRImage(file, i) {
     const td = document.createElement("td");
     const img = document.createElement("img");
 
+    img.alt = file.name;
     img.src = file.src;
     img.file = file.file;
+    img.hasUpload = validFileSize(file.size);
 
     img.onload = function () {
         window.URL.revokeObjectURL(this.src);

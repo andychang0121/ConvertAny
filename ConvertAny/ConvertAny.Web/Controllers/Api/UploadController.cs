@@ -1,17 +1,19 @@
-﻿using ConvertAny.Web.Helper;
+﻿using ConvertAny.Common.Enum;
+using ConvertAny.Common.Helper;
+using ConvertAny.Common.Models;
+using ConvertAny.Web.Helper;
 using ConvertAny.Web.Models;
 using ConvertAny.Web.Models.Image;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using ConvertAny.Service;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Primitives;
+using ConvertAny.Common.Models.Image;
 
 namespace ConvertAny.Web.Controllers.Api
 {
@@ -19,16 +21,13 @@ namespace ConvertAny.Web.Controllers.Api
     [ApiController]
     public class UploadController : ControllerBase
     {
-        public const string _zipContentType = "application/zip";
-
         [TempData]
         public string TempData { get; set; }
 
 
         private static bool[] GetIsPortaits(StringValues stringValue)
-            => ((string) stringValue)
-                .GetStringArray()
-                .GetStingArrayToBoolean()
+            => ((string)stringValue)
+                .GetStringArray().GetStingArrayToBoolean()
                 ?.ToArray();
 
         [HttpPost]
@@ -85,7 +84,7 @@ namespace ConvertAny.Web.Controllers.Api
 
             string fileName = $"{Guid.NewGuid()}.zip";
 
-            return File(bytes, _zipContentType, fileName);
+            return File(bytes, Controllers.UploadController._zipContentType, fileName);
         }
 
         private static double GetRatio(bool isPortait, int limitPx, int width, int height)
@@ -135,12 +134,12 @@ namespace ConvertAny.Web.Controllers.Api
 
                     fileName = $"{ecName}-{fileName}";
 
-                    ZipData zipData = new ZipData
-                    {
-                        FileName = fileName,
-                        Bytes = bytes,
-                        FolderName = string.Empty
-                    };
+                    ZipData zipData = new ZipData(bytes, fileName, string.Empty);
+                    //{
+                    //    FileName = fileName,
+                    //    Bytes = bytes,
+                    //    FolderName = string.Empty
+                    //};
 
                     entryFiles.Add(zipData);
                 }

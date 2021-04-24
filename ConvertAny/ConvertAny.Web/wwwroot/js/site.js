@@ -12,3 +12,21 @@ Number.prototype.numberFormat = function (c, d, t) {
         j = (j = i.length) > 3 ? j % 3 : 0;
     return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
 };
+
+function bytesToSize(bytes) {
+    if (bytes === 0) return "0 B";
+    const k = 1024;
+    const sizes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+    const rs = (bytes / Math.pow(k, i)).toPrecision(3) + " " + sizes[i];
+    return rs;
+}
+
+function validFileSize(bytes) {
+    if (bytes === 0) return true;
+    const _getSize = function (_bytes) {
+        return _bytes / 1024 / 1024;
+    }
+    return _getSize(bytes) <= 2;
+}

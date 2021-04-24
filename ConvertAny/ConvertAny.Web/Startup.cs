@@ -7,6 +7,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ConvertAny.Service.Interface;
+using ConvertAny.Service.Process;
+using ConvertAny.Service.Repository;
 
 namespace ConvertAny.Web
 {
@@ -40,6 +43,10 @@ namespace ConvertAny.Web
 
             services.AddMvc().AddSessionStateTempDataProvider();
             services.AddSession();
+
+            services.AddScoped<IConvertProcess, ConvertProcess>();
+            services.AddScoped<IImageService, ImageService>();
+            services.AddScoped<IZipService, ZipService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

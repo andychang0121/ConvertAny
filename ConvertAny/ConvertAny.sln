@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConvertAny.Web", "ConvertAn
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConvertAny.Service", "ConvertAny.Service\ConvertAny.Service.csproj", "{9305573A-C5E2-4ED2-A1EC-D03B6E11EA0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConvertAny.Data", "ConvertAny.Data\ConvertAny.Data.csproj", "{D9E38392-3017-41FB-9C5C-DD3ADF464F41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConvertAny.Data", "ConvertAny.Data\ConvertAny.Data.csproj", "{D9E38392-3017-41FB-9C5C-DD3ADF464F41}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConvertAny.Common", "ConvertAny.Common\ConvertAny.Common.csproj", "{7386957D-8F0F-4AB3-8962-D422C34FEFF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{D9E38392-3017-41FB-9C5C-DD3ADF464F41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9E38392-3017-41FB-9C5C-DD3ADF464F41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9E38392-3017-41FB-9C5C-DD3ADF464F41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7386957D-8F0F-4AB3-8962-D422C34FEFF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7386957D-8F0F-4AB3-8962-D422C34FEFF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7386957D-8F0F-4AB3-8962-D422C34FEFF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7386957D-8F0F-4AB3-8962-D422C34FEFF7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -41,6 +47,7 @@ Global
 		{279B1A8E-0867-494B-94C1-1FF6AF427E2A} = {B3383C7B-2FDD-48F2-82E2-2E85DE950222}
 		{9305573A-C5E2-4ED2-A1EC-D03B6E11EA0C} = {9F948DDC-ED21-44D6-9798-E5310F7A1DA4}
 		{D9E38392-3017-41FB-9C5C-DD3ADF464F41} = {C022E5D6-819B-41B8-864C-22EF68BE5B13}
+		{7386957D-8F0F-4AB3-8962-D422C34FEFF7} = {9F948DDC-ED21-44D6-9798-E5310F7A1DA4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EC3E75D0-1013-4D38-A352-FA47C04C59D5}

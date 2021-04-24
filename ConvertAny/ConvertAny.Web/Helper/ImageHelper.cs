@@ -1,11 +1,11 @@
-﻿using ConvertAny.Web.Controllers;
-using ConvertAny.Web.Models.Image;
+﻿using ConvertAny.Web.Models.Image;
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
-using ConvertAny.Service;
+using ConvertAny.Common.Enum;
+using ConvertAny.Common.Models.Image;
 
 namespace ConvertAny.Web.Helper
 {

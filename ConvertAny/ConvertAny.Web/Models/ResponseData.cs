@@ -1,4 +1,4 @@
-﻿namespace ConvertAny.Web.Models.Image
+﻿namespace ConvertAny.Web.Models
 {
     public class ResponseData
     {

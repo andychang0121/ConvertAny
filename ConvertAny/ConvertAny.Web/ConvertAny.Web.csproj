@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Helper\StringHelper.cs" />
+    <Compile Remove="Helper\ZipHelper.cs" />
+    <Compile Remove="Models\Image\ImageOutput.cs" />
+    <Compile Remove="Models\Image\ImageProfile.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.2" />
@@ -20,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ConvertAny.Common\ConvertAny.Common.csproj" />
     <ProjectReference Include="..\ConvertAny.Service\ConvertAny.Service.csproj" />
   </ItemGroup>
 

@@ -7,13 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 
 namespace ConvertAny.Web.Controllers
 {
     public partial class UploadController
     {
         [HttpPost]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Post([FromBody] RequestData requestData)
         {
             if (!requestData.ValidRequestData()) return Json(new ResponseResult
@@ -23,9 +24,18 @@ namespace ConvertAny.Web.Controllers
 
             ResponseData response = await ConvertImageAsync(requestData);
 
-            IActionResult rs = await Task.Run(() => SetTempData(response));
+            ResponseData rs = new ResponseData
+            {
+                Result = await response.Result.GetBase64(),
+                FileName = response.FileName.SetDownloadFileName("zip"),
+                ContentType = response.ContentType
+            };
 
-            return rs;
+            return new JsonResult(new { Data = rs });
+
+            //IActionResult rs = await Task.Run(() => SetTempData(response));
+
+            //return rs;
         }
 
         private async Task<ResponseData> ConvertImageAsync(RequestData requestData)

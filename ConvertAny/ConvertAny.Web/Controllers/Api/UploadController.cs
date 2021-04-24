@@ -80,7 +80,7 @@ namespace ConvertAny.Web.Controllers.Api
         {
             ResponseData rs = JsonConvert.DeserializeObject<ResponseData>(TempData);
 
-            byte[] bytes = rs.Result;
+            byte[] bytes = (byte[])rs.Result;
 
             string fileName = $"{Guid.NewGuid()}.zip";
 

@@ -2,7 +2,7 @@
 {
     public class ResponseData
     {
-        public byte[] Result { get; set; }
+        public object Result { get; set; }
 
         public string FileName { get; set; }
 

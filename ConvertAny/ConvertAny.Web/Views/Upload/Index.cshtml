@@ -1,34 +1,4 @@
-﻿@*<div class="row">
-        <div class="input-group input-group-sm mb-3">
-            <div class="input-group-prepend">
-                <span id="fileSelect" class="input-group-text" style="cursor: pointer;">Select Files</span>
-            </div>
-            <input type="file" id="fileElem"
-                   multiple
-                   accept="image/*"
-                   style="display: none" onchange="handleFiles(this.files)">
-            <div class="input-group-prepend">
-                <span id="uploadFiles" class="input-group-text btn btn-info"
-                      style="cursor: pointer;">Upload Files</span>
-            </div>
-        </div>
-        <table id="fileSelectResult" class="table table-hover table-sm">
-            <thead></thead>
-            <tbody>
-                <tr>
-                    <td style="height: 120px; background-color: lightgray; color: navy; text-align: center;">
-                        <span>Please Select Files</span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    @section Scripts {
-        <script async src="js/Upload/Upload.index.js"></script>
-    }*@
-
-<link rel="stylesheet" href="~/css/Upload/ImageUpload.css" />
+﻿<link rel="stylesheet" href="~/css/Upload/ImageUpload.css" />
 @Html.AntiForgeryToken()
 <input id="fileElem"
        type="file"
@@ -68,21 +38,12 @@
 </div>
 
 <div id="fileContainer" class="row">
-    <div id="fileArea" class="col-lg-7 col-sm-7" style="float: left;">
+    <div id="fileArea" class="col-lg-7 col-sm-7 fl">
         <div id="fileResult" class="col-12">
-            <div class="col-12" data-description>
-                <ol>
-                    <li>提供電商上架圖片</li>
-                    <li>Shopee，PCHome，MoMo</li>
-                    <li>可以將圖片拖拉到拖拉區</li>
-                    <li>或是使用選擇圖片按鍵</li>
-                    <li>自定義 寬(width) 與 高(height)</li>
-                    <li>圖片限制是 1.5 MB</li>
-                </ol>
-            </div>
+            @await Html.PartialAsync("_Description")
         </div>
     </div>
-    <div class="col-lg-5 col-sm-5" style="float: left;">
+    <div class="col-lg-5 col-sm-5 fl">
         <div id="dropArea" class="col-12">
             <div id="dropbox" class="col-12">
                 Drag & drop your files (<=1.5 MB )

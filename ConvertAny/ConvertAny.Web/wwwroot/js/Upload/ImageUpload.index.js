@@ -85,8 +85,6 @@ function setUploadFiles(b) {
 }
 
 function setDropFilesToTable(files) {
-    console.log(files);
-
     removeFileResult("[data-fileResult]");
     setDescription("[data-description]", false);
 
@@ -168,7 +166,7 @@ function uploadFilesHandler() {
                     requestData: _request
                 };
 
-                postUploadFile("/upload/postdataAsync", _requestData, _progressbar);
+                postUploadFile("/upload/post", _request, _progressbar);
             });
         }
     });
@@ -209,12 +207,16 @@ function postUploadFile(url, data, progressbar) {
             }
         },
         url: url,
-        data: data,
+        /*data: data,*/
+        data: JSON.stringify(data),
+        contentType: "application/json",
         beforeSend: function () {
             setAjaxLoader(true);
         },
         success: function (r, textStatus, jqXHR) {
-            getDownloadFile(r.FileName, r.Result).then(function (link) {
+            console.log(r, textStatus, jqXHR);
+            const _rs = r.data;
+            getDownloadFile(_rs.fileName, _rs.result).then(function (link) {
                 link.remove();
             });
         },

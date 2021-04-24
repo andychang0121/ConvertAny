@@ -1,0 +1,146 @@
+﻿#fileContainer {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+}
+
+#fileArea, #dropArea {
+    padding: 0;
+}
+
+
+#fileResult {
+    padding: 2px 2px 2px 2px;
+}
+
+#dropArea {
+    background-color: var(--backgroundcolorDefault);
+    border-radius: 16px;
+}
+
+#uploadBtn {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#dropbox {
+    height: 320px;
+    line-height: 320px;
+    border-radius: 16px;
+    border: 1px dashed #808080;
+    border: 1px dashed rgba(128, 128, 128, 0.6);
+    background-color: rgba(239, 239, 239, 0.46);
+    text-align: center;
+    font-weight: bold;
+    font-size: 140%;
+    color: lightgray;
+}
+
+    #dropbox.highlight {
+        border-width: 2px !important;
+        border-color: rgba(128, 128, 128, 0.9) !important;
+    }
+
+#customSizes {
+    padding: 5px 0 5px 0;
+}
+
+[data-file] {
+    padding: 5px 10px 5px 10px;
+    border-width: thin;
+    border-bottom: 1px solid #808080;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+}
+
+[data-file-info] {
+    padding: 5px 0 5px 0;
+}
+
+[data-file-info] {
+    padding: 5px 0 10px 0;
+}
+
+[data-file-size] {
+    color: gray;
+    padding-left: 10px;
+    font-size: 90%
+}
+
+[data-progress], [data-alert] {
+    margin-bottom: 5px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+[data-progress] {
+    height: 10px !important;
+}
+
+[data-img] {
+    padding-left: 0;
+}
+
+[data-fileResult] {
+    padding-bottom: 20px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+    [data-fileResult]:hover {
+        background-color: var(--backgroundcolorDefault);
+        cursor: pointer;
+    }
+
+[data-remove] {
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+    [data-remove] span {
+        padding-top: 10px;
+        color: rgba(128, 128, 128, 0.9);
+    }
+
+        [data-remove] span:hover {
+            color: red;
+        }
+
+[data-description] {
+    padding-top: 20px;
+    padding-left: 0;
+    padding-bottom: 20px;
+}
+
+ol {
+    list-style: none;
+    counter-reset: my-awesome-counter;
+    padding-left: 0;
+}
+
+li {
+    counter-increment: my-awesome-counter;
+    margin: 0.5rem 0.25rem 0.5rem 0.25rem;
+    font-size: 110%;
+}
+
+    li::before {
+        content: counter(my-awesome-counter);
+        font-size: 70%;
+        background: rgba(102, 41, 116, 0.8);
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        display: inline-block;
+        line-height: 2rem;
+        color: white;
+        text-align: center;
+        margin-right: 1rem;
+    }
+
+ol ol li::before {
+    background: #DE51FF;
+}
+
+ol ol ol li::before {
+    background: #EE9EFF;
+}

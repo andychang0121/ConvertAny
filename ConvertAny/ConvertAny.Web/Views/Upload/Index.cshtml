@@ -1,29 +1,122 @@
-﻿<div class="row">
-    <div class="input-group input-group-sm mb-3">
-        <div class="input-group-prepend">
-            <span id="fileSelect" class="input-group-text" style="cursor: pointer;">Select Files</span>
+﻿@*<div class="row">
+        <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+                <span id="fileSelect" class="input-group-text" style="cursor: pointer;">Select Files</span>
+            </div>
+            <input type="file" id="fileElem"
+                   multiple
+                   accept="image/*"
+                   style="display: none" onchange="handleFiles(this.files)">
+            <div class="input-group-prepend">
+                <span id="uploadFiles" class="input-group-text btn btn-info"
+                      style="cursor: pointer;">Upload Files</span>
+            </div>
         </div>
-        <input type="file" id="fileElem"
-               multiple
-               accept="image/*"
-               style="display: none" onchange="handleFiles(this.files)">
-        <div class="input-group-prepend">
-            <span id="uploadFiles" class="input-group-text btn btn-info"
-                  style="cursor: pointer;">Upload Files</span>
+        <table id="fileSelectResult" class="table table-hover table-sm">
+            <thead></thead>
+            <tbody>
+                <tr>
+                    <td style="height: 120px; background-color: lightgray; color: navy; text-align: center;">
+                        <span>Please Select Files</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    @section Scripts {
+        <script async src="js/Upload/Upload.index.js"></script>
+    }*@
+
+<link rel="stylesheet" href="~/css/Upload/ImageUpload.css" />
+@Html.AntiForgeryToken()
+<input id="fileElem"
+       type="file"
+       multiple
+       accept="image/*"
+       style="display: none"
+       onchange="setDropFilesToTable(this.files)">
+
+<div class="col-12" data-fileResult-template style="display: none;">    `
+    <div class="col-12" data-file>
+        <div class="col-1" data-remove>
+            <span class="glyphicon glyphicon-trash" onclick="removeSelected(this)"></span>
+        </div>
+        <div class="col-2" data-img>
+            <img src="" width="80" alt="sample" />
+        </div>
+        <div class="col-9">
+            <div class="col-lg-12 col-sm-12" data-file-info>
+                <span data-file-name></span>
+                <span data-file-size></span>
+            </div><!-- File Info-->
+            <div class="col-lg-12  col-sm-12 progress" data-progress style="display: none;">
+                <div class="progress-bar progress-bar-danger"
+                     role="progressbar"
+                     data-progress-bar
+                     aria-valuenow="0"
+                     aria-valuemin="0"
+                     aria-valuemax="100"
+                     style="width: 0;">
+                </div>
+            </div><!-- Progress bar-->
+            <div class="col-lg-12 col-sm-12" data-alert style="display: none;">
+                <span class="label label-danger">size over 1.5MB</span>
+            </div>
         </div>
     </div>
-    <table id="fileSelectResult" class="table table-hover table-sm">
-        <thead></thead>
-        <tbody>
-            <tr>
-                <td style="height: 120px; background-color: lightgray; color: navy; text-align: center;">
-                    <span>Please Select Files</span>
-                </td>
-            </tr>
-        </tbody>
-    </table>
 </div>
 
-@section Scripts {
-    <script async src="js/Upload.index.js"></script>
+<div id="fileContainer" class="row col-12">
+    <div id="fileArea" class="col-7">
+        <div id="fileResult" class="col-12">
+            <div class="col-12" data-description>
+                <ol>
+                    <li>提供電商上架圖片</li>
+                    <li>Shopee，PCHome，MoMo</li>
+                    <li>可以將圖片拖拉到拖拉區</li>
+                    <li>或是使用選擇圖片按鍵</li>
+                    <li>自定義 寬(width) 與 高(height)</li>
+                    <li>圖片限制是 1.5 MB</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="col-5">
+        <div id="dropArea" class="col-12">
+            <div id="dropbox" class="col-12">
+                Drag & drop your files (<=1.5 MB )
+            </div>
+        </div>
+        <div id="customSizes" class="input-group input-group-sm">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="customWidth">寬度</span>
+            </div>
+            <input type="text" class="form-control" placeholder="自定義寬度 px">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="customHeight">高度</span>
+            </div>
+            <input type="text" class="form-control" placeholder="自定義高度 px">
+        </div>
+        <div id="uploadBtn" class="btn-group-sm" role="group" aria-label="uploadBtns">
+            <button id="fileSelect" type="button" class="btn btn-primary">
+                <i class="fas fa-images"></i>
+                選擇圖片
+            </button>
+            <button id="uploadFiles" type="button" class="btn btn-primary" disabled="disabled">
+                <i class="fas fa-redo-alt fa-spin"></i>
+                開始轉換
+            </button>
+            <button id="resetFiles" type="button" class="btn btn-primary">
+                <i class="fa fa-trash-alt"></i>
+                重新選擇
+            </button>
+        </div>
+    </div>
+
+</div>
+@section scripts
+{
+    <script src="~/js/Upload/ImageUpload.index.js"></script>
 }
+

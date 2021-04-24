@@ -44,6 +44,9 @@
 #customSizes {
     padding: 5px 0 5px 0;
 }
+.p2 {
+    padding-left: 2px;
+}
 
 [data-file] {
     padding: 5px 10px 5px 10px;
@@ -92,12 +95,13 @@
     }
 
 [data-remove] {
+    float: right;
+    padding-top: 1.4%;
     padding-left: 2px;
     padding-right: 2px;
 }
 
     [data-remove] span {
-        padding-top: 10px;
         color: rgba(128, 128, 128, 0.9);
     }
 

@@ -40,12 +40,12 @@
 <div class="col-12" data-fileResult-template style="display: none;">    `
     <div class="col-12" data-file>
         <div class="col-1" data-remove>
-            <span class="glyphicon glyphicon-trash" onclick="removeSelected(this)"></span>
+            <span class="fa fa-trash-alt" onclick="removeSelected(this)"></span>
         </div>
         <div class="col-2" data-img>
             <img src="" width="80" alt="sample" />
         </div>
-        <div class="col-9">
+        <div class="col-9 p2">
             <div class="col-lg-12 col-sm-12" data-file-info>
                 <span data-file-name></span>
                 <span data-file-size></span>
@@ -67,8 +67,8 @@
     </div>
 </div>
 
-<div id="fileContainer" class="row col-12">
-    <div id="fileArea" class="col-7">
+<div id="fileContainer" class="row">
+    <div id="fileArea" class="col-lg-7 col-sm-7" style="float: left;">
         <div id="fileResult" class="col-12">
             <div class="col-12" data-description>
                 <ol>
@@ -82,7 +82,7 @@
             </div>
         </div>
     </div>
-    <div class="col-5">
+    <div class="col-lg-5 col-sm-5" style="float: left;">
         <div id="dropArea" class="col-12">
             <div id="dropbox" class="col-12">
                 Drag & drop your files (<=1.5 MB )
@@ -98,7 +98,7 @@
             </div>
             <input type="text" class="form-control" placeholder="自定義高度 px">
         </div>
-        <div id="uploadBtn" class="btn-group-sm" role="group" aria-label="uploadBtns">
+        <div id="uploadBtn" class="btn-group" role="group" aria-label="uploadBtns">
             <button id="fileSelect" type="button" class="btn btn-light">
                 <i class="fas fa-images"></i>
                 選擇圖片
@@ -113,7 +113,6 @@
             </button>
         </div>
     </div>
-
 </div>
 @section scripts
 {

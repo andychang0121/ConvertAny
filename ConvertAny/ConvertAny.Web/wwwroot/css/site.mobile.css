@@ -1,0 +1,77 @@
+﻿@media(max-width:767px) {
+    #dropbox {
+        font-size: 110% !important;
+        height: 280px !important;
+        line-height: 240px !important;
+        border-width: 2px !important;
+    }
+
+    [data-description] {
+        padding: 5px 0 5px 0 !important;
+        font-size: 95% !important;
+    }
+
+    input {
+        font-size: 16px !important;
+    }
+}
+
+@media(min-width:768px) {
+}
+
+@media(min-width:992px) {
+}
+
+@media(min-width:1200px) {
+}
+
+
+/*
+/* ----------- iPhone X ----------- */
+/*https://css-tricks.com/snippets/css/media-queries-for-standard-devices*/
+/* Portrait and Landscape */
+@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) {
+    html, body {
+        overflow-x: hidden;
+    }
+
+    body {
+        position: relative;
+    }
+
+    #uploadFiles {
+        color: orangered;
+        font-weight: bold;
+    }
+}
+
+/* Portrait */
+@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait) {
+    html, body {
+        overflow-x: hidden;
+    }
+
+    body {
+        position: relative;
+    }
+
+    #uploadFiles {
+        color: orangered;
+        font-weight: bold;
+    }
+}
+
+/* Landscape */
+@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: landscape) {
+    html, body {
+        overflow-x: hidden;
+    }
+
+    body {
+        position: relative;
+    }
+
+    #uploadFiles {
+        display: none !important;
+    }
+}

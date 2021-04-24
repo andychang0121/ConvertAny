@@ -3,6 +3,7 @@ using ConvertAny.Common.Models.Image;
 using ConvertAny.Service.Models;
 using ConvertAny.Web.Helper;
 using ConvertAny.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.IO;
@@ -14,7 +15,7 @@ namespace ConvertAny.Web.Controllers
     {
         [HttpPost]
         //[AllowAnonymous]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Post([FromBody] RequestData requestData)
         {
             if (!requestData.ValidRequestData()) return Json(new ResponseResult

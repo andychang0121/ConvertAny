@@ -160,13 +160,13 @@ function uploadFilesHandler() {
                 _progress.style.display = "";
 
                 const _progressbar = _progress.querySelector("[data-progress-bar]");
-                const _requestToken = document.getElementsByName("__RequestVerificationToken");
-                const _requestData = {
-                    __RequestVerificationToken: _requestToken[0].value,
-                    requestData: _request
-                };
+                //const _requestToken = document.getElementsByName("__RequestVerificationToken");
+                //const _requestData = {
+                //    __RequestVerificationToken: _requestToken[0].value,
+                //    requestData: JSON.stringify(_request)
+                //};
 
-                postUploadFile("/upload/post", _request, _progressbar);
+                postUploadFile("/upload/post", JSON.stringify(_request), _progressbar);
             });
         }
     });
@@ -207,14 +207,13 @@ function postUploadFile(url, data, progressbar) {
             }
         },
         url: url,
-        /*data: data,*/
-        data: JSON.stringify(data),
+        data: data,
         contentType: "application/json",
-        beforeSend: function () {
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader("RequestVerificationToken", getRequestVerificationToken());
             setAjaxLoader(true);
         },
         success: function (r, textStatus, jqXHR) {
-            console.log(r, textStatus, jqXHR);
             const _rs = r.data;
             getDownloadFile(_rs.fileName, _rs.result).then(function (link) {
                 link.remove();

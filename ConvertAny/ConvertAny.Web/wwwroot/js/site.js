@@ -122,3 +122,9 @@ function getParentNodeBySelector(o, name) {
     if (findArray(_dataSet, name)) return o;
     return getParentNodeBySelector(o.parentNode, name);
 }
+
+function getRequestVerificationToken() {
+    const _requestToken = document.getElementsByName("__RequestVerificationToken");
+    const _token = _requestToken[0].value;
+    return _token;
+}

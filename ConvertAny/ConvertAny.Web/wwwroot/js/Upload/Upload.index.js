@@ -82,9 +82,24 @@ function unhighlight(o) {
 function setUploadFiles(b) {
     const _o = document.getElementById("uploadFiles");
     _o.disabled = b;
+
+    const _i = _o.getElementsByTagName("i")[0];
+
+    if (_i) {
+        _i.classList.remove("fa-spin");
+        _i.style.color = "";
+        if (!b) {
+            _i.classList.add("fa-spin");
+            _i.style.color = "red";
+        }
+    }
 }
 
 function setDropFilesToTable(files) {
+    const _filesLength = files.length;
+
+    if (_filesLength === 0) return;
+
     removeFileResult("[data-fileResult]");
     setDescription("[data-description]", false);
 
@@ -160,13 +175,10 @@ function uploadFilesHandler() {
                 _progress.style.display = "";
 
                 const _progressbar = _progress.querySelector("[data-progress-bar]");
-                //const _requestToken = document.getElementsByName("__RequestVerificationToken");
-                //const _requestData = {
-                //    __RequestVerificationToken: _requestToken[0].value,
-                //    requestData: JSON.stringify(_request)
-                //};
 
-                postUploadFile("/upload/post", JSON.stringify(_request), _progressbar);
+                const _jsonData = JSON.stringify(_request);
+
+                postUploadFile("/upload/post", _jsonData, _progressbar);
             });
         }
     });
@@ -252,7 +264,7 @@ function removeSelected(o) {
 function getFileResult(t) {
     const _fileResults = document.querySelectorAll(t);
     const _isEmpty = _fileResults.length === 0;
-    setDescription("[data-description]", !_isEmpty);
+    setDescription("[data-description]", _isEmpty);
 }
 
 function setDescription(s, b) {

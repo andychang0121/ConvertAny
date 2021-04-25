@@ -14,7 +14,7 @@ namespace ConvertAny.Web.Controllers
     public partial class UploadController
     {
         [HttpPost]
-        //[AllowAnonymous]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Post([FromBody] RequestData requestData)
         {
@@ -33,10 +33,6 @@ namespace ConvertAny.Web.Controllers
             };
 
             return new JsonResult(new { Data = rs });
-
-            //IActionResult rs = await Task.Run(() => SetTempData(response));
-
-            //return rs;
         }
 
         private async Task<ResponseData> ConvertImageAsync(RequestData requestData)

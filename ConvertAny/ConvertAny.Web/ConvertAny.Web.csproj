@@ -32,8 +32,4 @@
     <ProjectReference Include="..\ConvertAny.Service\ConvertAny.Service.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\css\Upload\" />
-  </ItemGroup>
-
 </Project>

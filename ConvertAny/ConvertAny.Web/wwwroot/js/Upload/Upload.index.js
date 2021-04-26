@@ -200,6 +200,11 @@ function postUploadFile(url, data, progressbar) {
                     progressbar.style.width = `${pc}%`;
                 }
             }, false);
+
+            xhr.addEventListener("progress", function (event) {
+                console.log(event);
+            }, false);
+
             return xhr;
         },
         xhrFields: {

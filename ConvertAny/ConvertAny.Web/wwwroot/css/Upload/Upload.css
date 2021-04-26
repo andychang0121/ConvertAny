@@ -17,9 +17,9 @@
     border-radius: 16px;
 }
 
-#uploadBtn {
-    padding-left: 0;
-    padding-right: 0;
+#rightArea {
+    padding-left: 2px;
+    padding-right: 2px;
 }
 
 #dropbox {
@@ -33,6 +33,7 @@
     font-weight: bold;
     font-size: 140%;
     color: lightgray;
+    margin-bottom: 1px;
 }
 
     #dropbox.highlight {
@@ -40,9 +41,13 @@
         border-color: rgba(128, 128, 128, 0.9) !important;
     }
 
-#customSizes {
-    padding: 5px 0 5px 0;
+#customSizes, #customSizeFiles, #uploadBtn {
+    padding: 2px 0 2px 0;
 }
+
+    #uploadBtn i {
+        margin: 0 2px 0 2px;
+    }
 
 .fl {
     float: left;
@@ -51,6 +56,34 @@
 .p2 {
     padding-left: 2px;
 }
+
+#customSizeFiles {
+}
+
+    #customSizeFiles input::placeholder {
+        color: gray;
+        font-size: 70%;
+    }
+
+    #customSizeFiles input:-moz-read-only {
+        color: navy;
+        background-color: whitesmoke;
+    }
+
+    /* Supported in Blink/WebKit/Edge without a prefix */
+    #customSizeFiles input:read-only {
+        color: navy;
+        background-color: whitesmoke;
+    }
+
+
+    #customSizeFiles span {
+        font-size: 80%
+    }
+
+    #customSizeFiles i {
+        margin: 0 2px 0 2px;
+    }
 
 [data-file] {
     padding: 5px 10px 5px 10px;
@@ -88,6 +121,12 @@
     padding-right: 0;
 }
 
+[data-alert] {
+    padding-left: 5px;
+    padding-right: 5px;
+    letter-spacing: 1px;
+}
+
 [data-progress] {
     height: 10px !important;
 }
@@ -112,22 +151,17 @@
     }
 
 [data-remove] {
+    position: relative;
+    top: 30px;
+    right: 10px;
     float: right;
-    padding-top: 1.4%;
-    padding-left: 2px;
-    padding-right: 2px;
-    height: 40px;
-    line-height: 40px;
-    vertical-align: middle;
+    z-index: 100;
+    color: rgba(128, 128, 128, 0.9);
 }
 
-    [data-remove] span {
-        color: rgba(128, 128, 128, 0.9);
+    [data-remove]:hover {
+        color: red;
     }
-
-        [data-remove] span:hover {
-            color: red;
-        }
 
 [data-description] {
     padding-top: 20px;

@@ -1,8 +1,12 @@
-﻿a.navbar-brand {
+﻿:root {
+    --backgroundcolorDefault: rgba(198, 198, 198, 0.31);
+}
+
+a.navbar-brand {
     white-space: normal;
     text-align: center;
     word-break: break-all;
-    color: yellowgreen!important;
+    color: yellowgreen !important;
 }
 
 /* Provide sufficient contrast against white background */
@@ -10,16 +14,16 @@ a {
     color: #0366d6;
 }
 
-.btn-primary {
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
     color: #fff;
     background-color: #1b6ec2;
     border-color: #1861ac;
 }
 
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+/*https://stackoverflow.com/questions/23333231/bootstrap-button-shows-blue-outline-when-clicked*/
+.btn:focus, .btn:active {
+    outline: none !important;
+    box-shadow: none;
 }
 
 /* Sticky footer styles

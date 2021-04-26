@@ -31,9 +31,6 @@ function validFileSize(bytes) {
     return _getSize(bytes) <= 2;
 }
 
-document.body.addEventListener("touchstart", function (e) { e.preventDefault(); });
-document.body.addEventListener("touchmove", function (e) { e.preventDefault(); });
-
 Number.prototype.numberFormat = function (c, d, t) {
     var n = this,
         c = isNaN(c = Math.abs(c)) ? 2 : c,

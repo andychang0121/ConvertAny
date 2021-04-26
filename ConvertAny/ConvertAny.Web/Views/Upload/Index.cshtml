@@ -7,18 +7,25 @@
        style="display: none"
        onchange="setDropFilesToTable(this.files)">
 
+<input id="sizefileElem"
+       type="file"
+       accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+       style="display: none"
+       onchange="setCustomizeFile(this.files)">
+
 <div class="col-12" data-fileResult-template style="display: none;">
     <div class="col-12" data-file>
-        <div class="col-1" data-remove>
-            <span class="fa fa-trash-alt" onclick="removeSelected(this)"></span>
-        </div>
+        @*onclick="removeSelected(this)"*@
+        <span class="far fa-trash-alt" data-remove></span>
+
         <div class="col-2" data-img>
-            <img src="" width="80" alt="sample" />
+            <img src="" width="80" alt="sample"/>
         </div>
         <div class="col-12 p2">
             <div class="col-lg-12 col-sm-12" data-file-info>
                 <span data-file-name></span>
                 <span data-file-size></span>
+                <span class="badge badge-danger" data-alert style="display: none;">大小超過 1.5M</span>
             </div><!-- File Info-->
             <div class="col-lg-12  col-sm-12 progress" data-progress style="display: none;">
                 <div class="progress-bar progress-bar-danger"
@@ -30,9 +37,6 @@
                      style="width: 0;">
                 </div>
             </div><!-- Progress bar-->
-            <div class="col-lg-12 col-sm-12" data-alert style="display: none;">
-                <span class="label label-danger">size over 1.5MB</span>
-            </div>
         </div>
     </div>
 </div>
@@ -43,13 +47,34 @@
             @await Html.PartialAsync("_Description")
         </div>
     </div>
-    <div class="col-lg-5 col-sm-5 fl">
+
+    <div id="rightArea" class="col-lg-5 col-sm-5 fl">
         <div id="dropArea" class="col-12">
             <div id="dropbox" class="col-12">
-                Drag & drop your files (<=1.5 MB )
+                圖片拖拉到這裡 (<=1.5 MB )
             </div>
         </div>
-        <div id="customSizes" class="input-group input-group-sm">
+
+        <div id="uploadBtn" class="btn-group  btn-group-sm">
+            <button id="fileSelect" type="button" class="btn btn-outline-dark">
+                <i class="fas fa-images"></i>
+                選擇圖片
+            </button>
+            @*<button id="uploadFiles" type="button" class="btn btn-outline-dark" disabled="disabled">
+                <i class="fas fa-redo-alt"></i>
+                開始轉換
+            </button>*@
+            <button id="resetFiles" type="button" class="btn btn-outline-dark">
+                <i class="far fa-times-circle"></i>
+                重新選擇
+            </button>
+            <button id="setCustomSize" type="button" class="btn btn-outline-dark" data-customsize="false">
+                <i class="fas fa-chevron-circle-down"></i>
+                開啟自定義設定
+            </button>
+        </div>
+
+        <div id="customSizes" class="input-group input-group-sm" style="display:none">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="customWidth">寬度</span>
             </div>
@@ -59,18 +84,31 @@
             </div>
             <input type="text" class="form-control" placeholder="自定義高度 px">
         </div>
-        <div id="uploadBtn" class="btn-group" role="group" aria-label="uploadBtns">
-            <button id="fileSelect" type="button" class="btn btn-light">
-                <i class="fas fa-images"></i>
-                選擇圖片
+
+        <div id="customSizeFiles" class="input-group input-group-sm" style="display:none">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="">多種尺寸設定清單</span>
+            </div>
+            <button id="sampleFile" class="btn btn-sm btn-light"
+                    onclick="location.href='Files/image2U.sample.xlsx'">
+                <i class="far fa-file-excel"></i>
+                範本
             </button>
-            <button id="uploadFiles" type="button" class="btn btn-light" disabled="disabled">
+            <input id="uploadcustomizefile" type="text" class="form-control" readonly="readonly" placeholder="檔案名稱">
+            <button id="selectcustomfile" type="button" class="btn btn-sm btn-light">
+                <i class="far fa-folder-open"></i>
+                @*選擇*@
+            </button>
+            <button id="resetCustomize" type="button" class="btn btn-sm btn-light">
+                <i class="far fa-times-circle"></i>
+                @*重置*@
+            </button>
+        </div>
+
+        <div id="" class="col-12" style="padding-left: 0px;">
+            <button id="uploadFiles" type="button" class="btn btn-outline-dark" disabled="disabled">
                 <i class="fas fa-redo-alt"></i>
                 開始轉換
-            </button>
-            <button id="resetFiles" type="button" class="btn btn-light">
-                <i class="fa fa-trash-alt"></i>
-                重新選擇
             </button>
         </div>
     </div>
